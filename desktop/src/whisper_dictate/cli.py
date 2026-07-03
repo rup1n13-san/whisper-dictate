@@ -119,6 +119,26 @@ def cmd_copy(n: int) -> int:
     return _copy_out(text)
 
 
+def cmd_qr() -> int:
+    """Provisioning QR for the Android app (Settings > Scan QR)."""
+    import json
+
+    import qrcode
+
+    try:
+        cfg = config.load()
+    except config.ConfigError as exc:
+        print(f"config error: {exc}", file=sys.stderr)
+        return 1
+    payload = json.dumps({"api_base_url": cfg.api_base_url, "api_key": cfg.api_key})
+    qr = qrcode.QRCode(border=1)
+    qr.add_data(payload)
+    qr.print_ascii(invert=True)
+    print("Scan with the Whisper Dictate Android app (Settings > Scan QR).")
+    print("The QR contains your API key — don't screenshot or share it.")
+    return 0
+
+
 def cmd_status() -> int:
     pid = _running_pid()
     print(f"recording: {'yes (pid ' + str(pid) + ')' if pid else 'no'}")
@@ -138,7 +158,7 @@ def cmd_status() -> int:
 
 def main() -> None:
     parser = argparse.ArgumentParser(prog="whisper-dictate")
-    parser.add_argument("command", choices=["toggle", "retry", "status", "copy"])
+    parser.add_argument("command", choices=["toggle", "retry", "status", "copy", "qr"])
     parser.add_argument(
         "n", nargs="?", type=int, default=1,
         help="for copy: 1 = latest transcript, 2 = previous, … (max 5)",
@@ -146,4 +166,5 @@ def main() -> None:
     args = parser.parse_args()
     if args.command == "copy":
         sys.exit(cmd_copy(args.n))
-    sys.exit({"toggle": cmd_toggle, "retry": cmd_retry, "status": cmd_status}[args.command]())
+    commands = {"toggle": cmd_toggle, "retry": cmd_retry, "status": cmd_status, "qr": cmd_qr}
+    sys.exit(commands[args.command]())
