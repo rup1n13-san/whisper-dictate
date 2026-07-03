@@ -1,0 +1,47 @@
+name: Mobile CI
+
+on:
+  push:
+    branches: ["dev"]
+    paths: ["mobile/**", ".github/workflows/mobile-ci.yml"]
+  pull_request:
+    branches: ["dev"]
+    paths: ["mobile/**", ".github/workflows/mobile-ci.yml"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v6
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Build and test
+        run: ./gradlew --no-daemon lint test assembleRelease
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: whisper-dictate-apk
+          path: mobile/app/build/outputs/apk/release/*.apk
+          retention-days: 7
+
+      - name: Install Firebase CLI
+        if: github.event_name == 'push'
+        run: npm install -g firebase-tools
+
+      - name: Distribute APK via Firebase
+        if: github.event_name == 'push'
+        run: |
+          firebase appdistribution:distribute app/build/outputs/apk/release/*.apk \
+            --app ${{ secrets.FIREBASE_APP_ID }} \
+            --groups testers \
+            --token "${{ secrets.FIREBASE_TOKEN }}"
