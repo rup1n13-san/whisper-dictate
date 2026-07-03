@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Whisper Dictate</string>
+
+    <!-- keyboard strip -->
+    <string name="status_idle">Tap the mic and dictate</string>
+    <string name="status_recording">Recording… tap to stop</string>
+    <string name="status_transcribing">Transcribing…</string>
+    <string name="status_no_speech">No speech detected</string>
+    <string name="status_secure_field">Dictation disabled in password fields</string>
+    <string name="status_no_mic_permission">Mic permission needed — opening settings</string>
+    <string name="mic_button">Start or stop dictation</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_history">History</string>
+    <string name="action_switch_keyboard">ABC</string>
+    <string name="action_retry">Retry</string>
+    <string name="history_empty">No transcripts yet</string>
+    <string name="action_back">Back</string>
+
+    <!-- settings -->
+    <string name="settings_api_key_hint">API key (gsk_…)</string>
+    <string name="settings_api_key_saved">API key saved</string>
+    <string name="settings_base_url_hint">API base URL</string>
+    <string name="settings_model_hint">Model</string>
+    <string name="settings_silence_label">Auto-stop after silence: %1$d s</string>
+    <string name="settings_scan_qr">Scan QR from desktop</string>
+    <string name="settings_qr_invalid">QR not recognized — paste the key manually below</string>
+    <string name="settings_provisioned">Endpoint and key configured from QR</string>
+    <string name="settings_save">Save</string>
+    <string name="settings_saved">Saved</string>
+    <string name="settings_grant_mic">Grant microphone access</string>
+    <string name="settings_mic_granted">Microphone: granted</string>
+    <string name="settings_enable_keyboard">Enable keyboard in system settings</string>
+    <string name="settings_pick_keyboard">Switch active keyboard</string>
+    <string name="settings_key_missing">API key: not set</string>
+    <string name="settings_key_set">API key: set</string>
+</resources>

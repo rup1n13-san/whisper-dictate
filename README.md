@@ -29,8 +29,8 @@ clipboard + notification ◄── Whisper API ◄──┘
 
 | Folder | Contents |
 |--------|----------|
-| `desktop/` | Linux client (Python) — current, working |
-| `mobile/` | Android voice-input IME (native Kotlin) — planned, same API |
+| `desktop/` | Linux client (Python) |
+| `mobile/` | Android voice-input keyboard (native Kotlin), same API |
 
 ## Desktop client
 
@@ -76,6 +76,7 @@ GROQ_API_KEY=gsk_...
 | `whisper-dictate retry` | Re-send the last recording after an API/network failure |
 | `whisper-dictate copy [N]` | Re-copy a stored transcript (1 = latest … 5) without an API call |
 | `whisper-dictate status` | Recording state, config, transcript history |
+| `whisper-dictate qr` | Provisioning QR for the Android keyboard (contains the key — private) |
 
 ### Configuration
 
@@ -96,11 +97,13 @@ hotkeys (hence the gsettings shortcut), cannot type into other windows
 without uinput (hence clipboard-first delivery), and cannot show always-on-top
 overlays (hence sounds + notifications).
 
-## Mobile (planned)
+## Mobile
 
 Android voice-input keyboard (IME) in native Kotlin hitting the same
-transcription API — dictate into any app's text field. Not started; lives in
-`mobile/` when it does.
+transcription API — dictate straight into any app's text field
+(`InputConnection.commitText`, no clipboard detour). Provisioned by scanning
+a QR generated on the desktop (`whisper-dictate qr`) or pasting the key.
+Build, setup and behavior: [mobile/README.md](mobile/README.md).
 
 ## Development
 
