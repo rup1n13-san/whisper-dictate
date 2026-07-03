@@ -1,0 +1,12 @@
+# Copy to ~/.config/whisper-dictate/config.toml — every key is optional.
+# The API key goes in ~/.config/whisper-dictate/env as GROQ_API_KEY=... (chmod 600).
+
+# Any OpenAI-compatible transcription API. Self-hosted later? Just change this URL.
+api_base_url = "https://api.groq.com/openai/v1"
+model = "whisper-large-v3-turbo"
+
+# Recording auto-stops after this many seconds of continuous silence (3-30).
+silence_seconds = 7.0
+
+# Hard cap on a single dictation (30-1800).
+max_duration_seconds = 300
