@@ -9,6 +9,7 @@ dependencies = [
     "numpy>=1.26",
     "requests>=2.31",
     "webrtcvad-wheels>=2.0.14",
+    "qrcode>=7.4",
 ]
 
 [project.optional-dependencies]
