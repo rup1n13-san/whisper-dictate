@@ -43,5 +43,5 @@ jobs:
         run: |
           firebase appdistribution:distribute app/build/outputs/apk/release/*.apk \
             --app ${{ secrets.FIREBASE_APP_ID }} \
-            --groups testers \
+            --testers "rupinie.adjohou@epitech.eu" \
             --token "${{ secrets.FIREBASE_TOKEN }}"
