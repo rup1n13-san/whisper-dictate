@@ -20,8 +20,7 @@ clipboard + notification ◄── Whisper API ◄──┘
 - **Backend-agnostic.** Talks to any OpenAI-compatible
   `/v1/audio/transcriptions` endpoint. Default is Groq
   (`whisper-large-v3-turbo`, free tier, ~1 s round-trip); switching to a
-  self-hosted server is one config line — see
-  [docs/VPS-MIGRATION.md](docs/VPS-MIGRATION.md).
+  self-hosted faster-whisper server is one config line.
 - **A dictation is never lost.** Failed API call? The audio is kept —
   `whisper-dictate retry`. Clipboard overwritten or delivery failed? The last
   5 transcripts are stored locally — `whisper-dictate copy [N]`.
@@ -32,7 +31,6 @@ clipboard + notification ◄── Whisper API ◄──┘
 |--------|----------|
 | `desktop/` | Linux client (Python) — current, working |
 | `mobile/` | Android voice-input IME (native Kotlin) — planned, same API |
-| `docs/` | Decisions, status journal, VPS migration guide |
 
 ## Desktop client
 
@@ -96,9 +94,7 @@ GROQ_API_KEY=gsk_...
 Wayland/GNOME imposes most of the architecture: apps cannot grab global
 hotkeys (hence the gsettings shortcut), cannot type into other windows
 without uinput (hence clipboard-first delivery), and cannot show always-on-top
-overlays (hence sounds + notifications). Details and settled decisions:
-[docs/DECISIONS.md](docs/DECISIONS.md). Project journal:
-[docs/STATUS.md](docs/STATUS.md).
+overlays (hence sounds + notifications).
 
 ## Mobile (planned)
 
@@ -114,5 +110,5 @@ python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
 .venv/bin/ruff check .        # lint
 ```
 
-No test suite yet; verification is a fake-server flow plus live dictation —
-see [docs/STATUS.md](docs/STATUS.md).
+No test suite yet; verification is a local fake-server flow plus live
+dictation.
