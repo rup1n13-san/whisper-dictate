@@ -37,28 +37,34 @@ clipboard + notification ◄── Whisper API ◄──┘
 ### Requirements
 
 Linux with Wayland (built and tested on Ubuntu GNOME), Python ≥ 3.11,
-a microphone, and:
-
-```bash
-sudo apt install wl-clipboard libportaudio2
-```
+a microphone. Everything else the install script takes care of.
 
 ### Install
 
 ```bash
-cd desktop
+git clone https://github.com/rup1n13-san/whisper-dictate.git
+cd whisper-dictate/desktop
 ./install.sh '<Super>z'    # any GNOME binding you like
 ```
 
-The script is idempotent: creates the venv, links `whisper-dictate` into
-`~/.local/bin`, installs config templates, and registers the GNOME shortcut.
+The script does the rest: installs missing system packages (`wl-clipboard`,
+`libnotify-bin`, …, via apt — it will ask for sudo only if something is
+missing), creates the venv, links `whisper-dictate` into `~/.local/bin`,
+installs the config templates, and registers the GNOME shortcut. It is
+idempotent — re-running it never breaks anything.
 
-Add your API key (free at [console.groq.com](https://console.groq.com)) to
-`~/.config/whisper-dictate/env`:
+Not on GNOME? Run `./install.sh` without an argument and bind
+`~/.local/bin/whisper-dictate toggle` to a key in your desktop's own
+shortcut settings.
+
+Then add your API key (free at [console.groq.com](https://console.groq.com))
+to `~/.config/whisper-dictate/env`:
 
 ```
 GROQ_API_KEY=gsk_...
 ```
+
+That's it — press the hotkey and start talking.
 
 ### Use
 
