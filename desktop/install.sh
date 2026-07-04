@@ -8,6 +8,11 @@ BIN_DIR="$HOME/.local/bin"
 CONF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/whisper-dictate"
 BINDING="${1:-}"
 
+apt_install() {
+    sudo apt-get update -qq
+    sudo apt-get install -y "$@"
+}
+
 echo "== python =="
 command -v python3 >/dev/null || { echo "   python3 not found — install Python 3.11+ first"; exit 1; }
 python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' \
@@ -23,7 +28,7 @@ python3 -c 'import venv, ensurepip' 2>/dev/null || MISSING+=(python3-venv)
 if [ "${#MISSING[@]}" -gt 0 ]; then
     if command -v apt-get >/dev/null; then
         echo "   missing: ${MISSING[*]} — installing (sudo will ask for your password)"
-        sudo apt-get install -y "${MISSING[@]}"
+        apt_install "${MISSING[@]}"
     else
         echo "   missing: ${MISSING[*]}"
         echo "   install them with your package manager, then re-run this script"
@@ -39,7 +44,7 @@ echo "== venv =="
 # the sounddevice wheel bundles PortAudio; fall back to the system lib if not
 if ! "$REPO/.venv/bin/python" -c 'import sounddevice' 2>/dev/null; then
     echo "   PortAudio missing — installing libportaudio2 (sudo will ask for your password)"
-    sudo apt-get install -y libportaudio2
+    apt_install libportaudio2
     "$REPO/.venv/bin/python" -c 'import sounddevice'
 fi
 
