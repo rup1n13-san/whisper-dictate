@@ -47,7 +47,7 @@ sudo apt install wl-clipboard libportaudio2
 
 ```bash
 cd desktop
-./install.sh '<Super>z'    # any GNOME binding you like
+./install.sh '<Super>z'    # any GNOME binding you like(the shortcut to run the programm)
 ```
 
 The script is idempotent: creates the venv, links `whisper-dictate` into
